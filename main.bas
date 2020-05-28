@@ -9,7 +9,7 @@ Sub main()
     Dim answer_cnt As Integer, last_cnt As Integer
     Dim i As Integer
     Dim pass_cnt As Integer, lot_cnt As Integer
-    Dim today_date As String, today_arr As Variant, fName As String
+    Dim today_date As String, today_arr As Variant, fName As String, cPath As String
 
     col_cnt = 1
     row_cnt = 1
@@ -191,14 +191,16 @@ Sub main()
     Else
         fName = fName & today_arr(2) & ".xlsx"
     End If
-    ActiveWorkbook.SaveAs Filename := fName, FileFormat := xlOpenXMLWorkbook
+    cPath = ActiveWorkbook.Path
+    ActiveWorkbook.SaveAs Filename := cPath & "/" & fName, FileFormat := xlOpenXMLWorkbook
 
     If lot_cnt >= pass_cnt Then
         MsgBox "合乎抽獎人數" & pass_cnt & "人，少於欲抽出人數" & lot_cnt & _
-            "人，故不進行抽獎" & vbCrlf & "請參考『中獎名單』頁面，並另存新檔為" & fName
+            "人，故不進行抽獎" & vbCrlf & "請參考『中獎名單』頁面，並另存新檔於" & _ 
+            cPath & vbCrlf & "檔案名稱為" & fName
     Else
         MsgBox lot_cnt & "人已成功抽出，請參考『中獎名單』頁面" & _
-            vbCrlf & "並另存新檔為" & fName
+            vbCrlf & "並另存新檔於" & cPath & _
+            vbCrlf & "檔案名稱為" & fName
     End If
-
 End Sub
