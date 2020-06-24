@@ -1,5 +1,5 @@
 Sub main()
-    Dim col_cnt As Integer, row_cnt As Integer
+    Dim col_cnt As Integer, row_cnt As Integer, n_cnt As Integer
     Dim share_cnt As Integer
     Dim mbr_cnt As Integer, shr_cnt As Integer
     Dim member As String, share As String
@@ -13,6 +13,7 @@ Sub main()
 
     col_cnt = 1
     row_cnt = 1
+    n_cnt = 2
     share_cnt = 1
     answer_cnt = 1
     last_cnt = 1
@@ -52,14 +53,20 @@ Sub main()
     Rows(1).Select
     Selection.AutoFilter
 
-    'Filter conditions for answering time and last login time
+    'Find columns needed to be filtered
     Do While Cells(1, answer_cnt).Value <> "總答題數"
         answer_cnt = answer_cnt + 1
     Loop
     Do While Cells(1, last_cnt).Value <> "最後登入時間"
         last_cnt = last_cnt + 1
     Loop
+    'Modify data from string to value in 總答題數 column
+    Do While Cells(n_cnt, answer_cnt).Value <> ""
+        Cells(n_cnt, answer_cnt) = Val(Trim(Cells(n_cnt, answer_cnt).Value))
+        n_cnt = n_cnt + 1
+    Loop
 
+    'Filter conditions for answering time and last login time
     asr_offset = Application.Inputbox(Prompt := "請輸入答題數門檻", Type := 1)
     Do While asr_offset = 0
         asr_offset = Application.Inputbox(Prompt := "此欄位不可為零！"& vbCrlf & _
